@@ -1,0 +1,69 @@
+[gd_scene load_steps=7 format=3 uid="uid://33lxxrv3sutp"]
+
+[ext_resource type="Texture2D" uid="uid://bnavk6hlnjv2j" path="res://purple.png" id="1_7jcqf"]
+[ext_resource type="Script" path="res://Scripts/level_1.gd" id="1_m8weu"]
+[ext_resource type="PackedScene" uid="uid://bbsdtls1f0ofy" path="res://player.tscn" id="2_e7rsw"]
+[ext_resource type="PackedScene" uid="uid://bqfp843hh63v3" path="res://maze.tscn" id="4_pqyb2"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_skl3c"]
+font_size = 32
+
+[sub_resource type="LabelSettings" id="LabelSettings_bax0a"]
+font_size = 20
+
+[node name="Level1" type="Node2D"]
+script = ExtResource("1_m8weu")
+
+[node name="Graphics" type="Node" parent="."]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="Graphics"]
+layer = -10
+
+[node name="Background" type="TextureRect" parent="Graphics/CanvasLayer"]
+z_index = -100
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_7jcqf")
+stretch_mode = 1
+
+[node name="StartLabel" type="Label" parent="Graphics"]
+z_index = -25
+offset_left = 532.0
+offset_top = 125.0
+offset_right = 627.0
+offset_bottom = 170.0
+text = "START"
+label_settings = SubResource("LabelSettings_skl3c")
+
+[node name="EndLabel" type="Label" parent="Graphics"]
+z_index = -25
+offset_left = 1057.0
+offset_top = 19.0
+offset_right = 1152.0
+offset_bottom = 64.0
+text = "END"
+label_settings = SubResource("LabelSettings_skl3c")
+
+[node name="Label" type="Label" parent="Graphics"]
+offset_left = 3.0
+offset_top = 66.0
+offset_right = 442.0
+offset_bottom = 280.0
+text = "Tutorial:
+1. You can control your space ship with WASD
+2. If you exit the path you DIE
+3. To win the game you must get to 
+the END"
+label_settings = SubResource("LabelSettings_bax0a")
+
+[node name="Player" parent="." instance=ExtResource("2_e7rsw")]
+position = Vector2(578, 219)
+
+[node name="Maze" parent="." instance=ExtResource("4_pqyb2")]
+z_index = -50
+position = Vector2(549, 205)
+
+[connection signal="body_exited" from="Maze" to="." method="_on_maze_body_exited"]
